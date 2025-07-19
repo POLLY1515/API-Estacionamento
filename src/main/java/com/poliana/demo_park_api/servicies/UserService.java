@@ -1,5 +1,6 @@
 package com.poliana.demo_park_api.servicies;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -34,6 +35,12 @@ public class UserService {
 		User user = buscarPorId(id);
 		user.setPassword(password);
 		return user;
+	}
+
+
+    @Transactional(readOnly = true)
+	public List<User> buscarTodos() {
+		return userRepository.findAll();
 	}
 
 	
