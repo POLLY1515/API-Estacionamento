@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.poliana.demo_park_api.dto.UserCreateDTO;
 import com.poliana.demo_park_api.dto.UserResponseDTO;
+import com.poliana.demo_park_api.dto.UserSenhaDTO;
 import com.poliana.demo_park_api.dto.mapper.UserMapper;
 import com.poliana.demo_park_api.entities.User;
 import com.poliana.demo_park_api.servicies.UserService;
@@ -41,9 +42,9 @@ public class UserController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody User user){
-	User usuario =	userService.editarSenha(id, user.getPassword());
-	return ResponseEntity.ok(usuario);
+	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserSenhaDTO dto){
+	User usuario =	userService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha() );
+	return ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping
