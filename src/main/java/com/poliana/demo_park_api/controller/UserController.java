@@ -19,6 +19,7 @@ import com.poliana.demo_park_api.dto.mapper.UserMapper;
 import com.poliana.demo_park_api.entities.User;
 import com.poliana.demo_park_api.servicies.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class UserController {
 	private final UserService userService;
 	
 	@PostMapping
-	public ResponseEntity<UserResponseDTO> create(@RequestBody UserCreateDTO createDTO){
+	public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserCreateDTO createDTO){
 	User usuario =	userService.salvar(UserMapper.toUser(createDTO));
 	return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDTO(usuario));
 	}
@@ -42,7 +43,7 @@ public class UserController {
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserSenhaDTO dto){
+	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @Valid @RequestBody UserSenhaDTO dto){
 	User usuario =	userService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha() );
 	return ResponseEntity.noContent().build();
 	}
